@@ -10,7 +10,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('@effortlessmotion/html-webpack-inline-source-plugin');
 const DynamicCdnWebpackPlugin = require('@effortlessmotion/dynamic-cdn-webpack-plugin');
-const moduleToCdn = require('module-to-cdn');
+const moduleToCdn = require('@talend/module-to-cdn');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 /*********************************
@@ -162,7 +162,6 @@ const DynamicCdnWebpackPluginConfig = {
   // set "verbose" to true to print console logs on CDN usage while webpack builds
   verbose: false,
   resolver: (packageName, packageVersion, options) => {
-    const packageSuffix = isProd ? '.min.js' : '.js';
     const moduleDetails = moduleToCdn(packageName, packageVersion, options);
 
     // don't externalize react during development due to issue with react-refresh
@@ -175,28 +174,6 @@ const DynamicCdnWebpackPluginConfig = {
     // "name" should match the package being imported
     // "var" is important to get right -- this should be the exposed global. Look up "webpack externals" for info.
     switch (packageName) {
-      case 'react-transition-group':
-        return {
-          name: packageName,
-          var: 'ReactTransitionGroup',
-          version: packageVersion,
-          url: `https://unpkg.com/react-transition-group@${packageVersion}/dist/react-transition-group${packageSuffix}`,
-        };
-      case 'react-bootstrap':
-        return {
-          name: packageName,
-          var: 'ReactBootstrap',
-          version: packageVersion,
-          url: `https://unpkg.com/react-bootstrap@${packageVersion}/dist/react-bootstrap${packageSuffix}`,
-        };
-      // must include peer dependencies for any custom imports
-      case '@types/react':
-        return {
-          name: packageName,
-          var: '@types/react',
-          version: packageVersion,
-          url: `https://unpkg.com/@types/react@${packageVersion}/index.d.ts`,
-        };
       // return defaults/null depending if Dynamic CDN plugin finds package
       default:
         return moduleDetails;
