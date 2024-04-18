@@ -46,6 +46,12 @@ const devDialogEntry = './dev/index.js';
 
 // define client entry points and output names
 const clientEntrypoints = [
+  {
+    name: 'CLIENT - Webapp Demo',
+    entry: './src/client/demo-bootstrap/index.js',
+    filename: 'demo-bootstrap',
+    template: './src/client/demo-bootstrap/index.html',
+  },
 ];
 
 // define certificate locations
