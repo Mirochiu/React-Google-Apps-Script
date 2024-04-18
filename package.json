@@ -9,16 +9,16 @@
   "scripts": {
     "test:integration": "jest --forceExit test/local-development.test",
     "test:integration:extended": "cross-env IS_EXTENDED=true jest --forceExit test/local-development.test",
-    "login": "clasp login",
-    "setup": "rimraf .clasp.json && mkdirp dist && clasp create --type webapp --title \"RGAS 2.1.1\" --rootDir ./dist && mv ./dist/.clasp.json ./.clasp.json && rimraf dist",
-    "open": "clasp open --addon",
+    "login": "pnpm exec clasp login",
+    "setup": "rimraf .clasp.json && mkdirp dist && pnpm exec clasp create --type webapp --title \"RGAS 2.1.1\" --rootDir ./dist && mv ./dist/.clasp.json ./.clasp.json && rimraf dist",
+    "open": "pnpm exec clasp open --webapp",
     "setup:https": "mkdirp certs && mkcert -key-file ./certs/key.pem -cert-file ./certs/cert.pem localhost 127.0.0.1",
     "build:dev": "cross-env NODE_ENV=development webpack",
     "build": "cross-env NODE_ENV=production webpack",
-    "deploy:dev": "rimraf dist && npm run build:dev && npx clasp push && clasp deploy --description \"DEV@$(date +%D_%R)\"",
-    "deploy": "rimraf dist && npm run build && npx clasp push && clasp deploy --description \"REL@$(date +%D_%R)\"",
+    "deploy:dev": "rimraf dist && pnpm run build:dev && pnpm exec clasp push && pnpm exec clasp deploy --description \"DEV@$(date +%D_%R)\"",
+    "deploy": "rimraf dist && pnpm run build && pnpm exec clasp push && pnpm exec clasp deploy --description \"REL@$(date +%D_%R)\"",
     "serve": "cross-env NODE_ENV=development webpack serve",
-    "start": "npm run deploy:dev && npm run serve"
+    "start": "pnpm run deploy:dev && pnpm run serve"
   },
   "keywords": [
     "react",
