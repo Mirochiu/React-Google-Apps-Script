@@ -68,7 +68,7 @@
     "jest-environment-node": "^29.7.0",
     "jest-image-snapshot": "^6.5.1",
     "mkdirp": "^3.0.1",
-    "postcss": "^8.4.38",
+    "postcss": "^8.5.10",
     "postcss-preset-env": "^9.5.4",
     "prettier": "^2.7.0",
     "puppeteer": "^24.16.1",
